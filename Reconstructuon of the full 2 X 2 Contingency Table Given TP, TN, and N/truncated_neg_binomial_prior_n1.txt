@@ -1,0 +1,15 @@
+model{
+
+TP ~ dbin(p1, n1)
+TN ~ dbin(p2, n2)
+
+n1 ~ dnegbin(p3, r) I(TP,N1)
+
+n2 <- N - n1
+
+p1 ~ dbeta(a1,b1)
+p2 ~ dbeta(a2,b2)
+p3 ~ dbeta(a3,b3)
+
+r ~ dgamma(0.1,0.01)
+}

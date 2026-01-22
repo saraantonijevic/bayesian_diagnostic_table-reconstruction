@@ -1,0 +1,12 @@
+list(
+  FP = 28,
+N = 182
+  a = 2,
+  b = 1,
+
+  alpha = 2,
+  beta  = 5,
+
+  alphaStar = 1,
+  betaStar  = 50
+)

@@ -1,0 +1,8 @@
+# INITS
+list(
+n = max(10, y_obs), 
+r = 5,
+lambda = 5, 
+pstar = 0.5, 
+p = 0.5
+)

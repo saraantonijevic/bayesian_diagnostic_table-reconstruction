@@ -1,0 +1,24 @@
+#MODEL
+
+model{
+# Observed count in the reported row (e.g., TP or FP)
+y <- y_obs  
+
+
+# Likelihood with feasibility constraint n >= y
+y ~ dbin(p, n)
+n ~ dnegbin(pstar, r)I(y,)
+
+
+# Hierarchy for the NegBin parameters
+r ~ dpois(lambda)
+lambda ~ dgamma(a, b)
+pstar ~ dbeta(alphastar, betastar)
+
+# Prior for success probability
+p ~ dbeta(alpha, beta)
+
+# Derived missing cell in the reported row
+missing_cell <- n - y
+
+}

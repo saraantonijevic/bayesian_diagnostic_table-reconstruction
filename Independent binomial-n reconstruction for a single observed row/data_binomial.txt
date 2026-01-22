@@ -1,0 +1,11 @@
+#DATA
+
+list(
+y_obs = 0, # replace with observed TP or FP
+
+a = 1, b = 0.1,
+
+alpha = 2, beta = 2,
+
+alphastar = 1, betastar = 1
+)

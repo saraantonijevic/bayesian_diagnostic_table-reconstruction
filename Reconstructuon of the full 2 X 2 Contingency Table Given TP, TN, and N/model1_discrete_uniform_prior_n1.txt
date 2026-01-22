@@ -1,0 +1,13 @@
+model{
+TP ~ dbin(p1, n1)
+
+TN ~ dbin(p2, n2)
+
+n1 ~ dcat(p[])
+n2 <- N - n1
+
+for(i in 1:(N-1)){ p[i] <- 1/(N-1) }
+
+p1 ~ dbeta(a1,b1)
+p2 ~ dbeta(a2,b2)
+}

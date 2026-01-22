@@ -1,0 +1,14 @@
+model{
+TP ~ dbin(p1, n1)
+
+TN ~ dbin(p2, n2)
+
+n1 ~ dpois(lambda)I(1, N1)
+n2 <- N - n1
+
+p1 ~ dbeta(a1,b1)
+p2 ~ dbeta(a2,b2)
+
+lambda ~ dgamma(0.1, 0.1)
+
+}

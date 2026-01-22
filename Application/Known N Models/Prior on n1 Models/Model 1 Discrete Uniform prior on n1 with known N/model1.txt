@@ -1,0 +1,13 @@
+model {
+# Likelihood
+  TP ~ dbin(p, n1)
+
+  n1 ~ dnegbin(pStar, r) I(TP, N)
+#Hyperpriors
+  r ~ dpois(lambda)
+  lambda ~ dgamma(a, b)
+
+  pStar ~ dbeta(alphaStar, betaStar)
+  p ~ dbeta(alpha, beta)
+
+}
