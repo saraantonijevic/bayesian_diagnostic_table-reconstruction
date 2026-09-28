@@ -1,0 +1,39 @@
+#  Incomplete 2x2 table, known N (WinBUGS / OpenBUGS / JAGS)
+# cell probabilities  pi ~ Dirichlet(alpha)        (default alpha = 1,1,1,1)
+# table(TP,FP,FN,TN) ~ Multinomial(N, pi)
+#  The multinomial is written as a chain of binomials (stick-breaking) so that
+#  TP and FP can be observed while FN is a latent node and TN = N - TP - FP - FN.
+
+model {
+  #Dirichlet(alpha) via stick-breaking
+  q1 ~ dbeta(alpha[1], a234)
+  q2 ~ dbeta(alpha[2], a34)
+  q3 ~ dbeta(alpha[3], alpha[4])
+  a234 <- alpha[2] + alpha[3] + alpha[4]
+  a34  <- alpha[3] + alpha[4]
+
+  #multinomial as a binomial chain
+  TP ~ dbin(q1, N)
+  NmTP <- N - TP
+  FP ~ dbin(q2, NmTP)
+  R <- N - TP - FP  # FN + TN, known
+  FN ~ dbin(q3, R) # latent
+  TN <- R - FN
+
+  # derived measures
+  Se <- TP / (TP + FN)
+  Sp <- TN / (TN + FP)
+  Acc<- (TP + TN) / N
+  Prev <- (TP + FN) / N
+
+  #reported rates (use* = 1 if reported, 0 if not; h* = rounding half-width)
+  gapSe <- max(0, abs(Se - rSe) - hSe  - 1.0E-9)
+  gapSp <- max(0, abs(Sp - rSp) - hSp   - 1.0E-9)
+  gapAcc<- max(0, abs(Acc- rAcc)  - hAcc - 1.0E-9)
+  gapPrev <- max(0, abs(Prev - rPrev) - hPrev - 1.0E-9)
+  gap <- useSe * gapSe + useSp * gapSp + useAcc * gapAcc + usePrev * gapPrev
+  gapsq <- useSe * pow(gapSe, 2) + useSp * pow(gapSp, 2) +
+           useAcc * pow(gapAcc, 2) + usePrev * pow(gapPrev, 2)
+  pok <- hard * equals(gap, 0) + (1 - hard) * exp(-0.5 * gapsq / pow(tol, 2))
+  ones ~ dbern(pok) # "ones trick": multiplies the posterior by pok
+}

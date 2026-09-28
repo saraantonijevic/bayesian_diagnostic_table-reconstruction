@@ -1,0 +1,51 @@
+display(log)
+check(C:/Research/incomplete/code/incomplete2x2_model.txt)
+model is syntactically correct
+data(C:/Research/incomplete/code/data.txt)
+data loaded
+compile(3)
+model compiled
+inits(1,C:/Research/incomplete/code/inits1.txt)
+chain initialized but other chain(s) contain uninitialized variables
+inits(2,C:/Research/incomplete/code/inits2.txt)
+chain initialized but other chain(s) contain uninitialized variables
+inits(3,C:/Research/incomplete/code/inits3.txt)
+model is initialized
+gen.inits()
+command #Bugs:gen.inits cannot be executed (is greyed out)
+thin.updater(150)
+update(34)
+set(FN)
+set(TN)
+set(Se)
+set(Sp)
+set(Acc)
+set(deviance)
+dic.set()
+update(334)
+coda(*,C:/Research/incomplete/code/coda)
+stats(*)
+
+Node statistics
+	 node	 mean	 sd	 MC error	2.5%	median	97.5%	start	sample
+	Acc	0.5497	0.238	0.00838	0.1806	0.5355	0.9532	35	1002
+	FN	262.2	147.6	5.196	12.0	272.0	491.0	35	1002
+	Se	0.3572	0.1965	0.006612	0.1762	0.2793	0.8974	35	1002
+	Sp	0.8648	0.1681	0.006045	0.2917	0.9303	0.9662	35	1002
+	TN	235.8	147.6	5.196	7.0	227.0	486.0	35	1002
+	deviance	13.06	2.125	0.07078	11.03	12.36	19.06	35	1002
+dic.stats()
+
+DIC
+Dbar = post.mean of -2logL; Dhat = -2LogL at post.mean of stochastic nodes
+	Dbar	Dhat	pD	DIC	
+FP	5.712	4.708	1.004	6.717	
+TP	7.351	6.308	1.043	8.393	
+ones	0.000	0.000	0.000	0.000	
+total	13.063	11.016	2.047	15.110	
+history(*,C:/Research/incomplete/code/history.odc)
+
+History
+
+save(C:/Research/incomplete/code/log.odc)
+save(C:/Research/incomplete/code/log.txt)
