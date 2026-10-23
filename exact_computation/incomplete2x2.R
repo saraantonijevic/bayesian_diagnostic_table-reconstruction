@@ -1,5 +1,5 @@
 
-#Give whatever is known: any cells, N, row/column totals, and any reported rates (possibly rounded). The function enumerates every
+#Give whatever is known: any cells, N, row/column totals, and any reported rates. The function enumerates every
 # table consistent with the hard information, weights each by a prior and by how well it reproduces the reported rates, and returns the
 #posterior over tables plus summaries of cells and derived measures.
 .measures <- function(T) {
@@ -65,14 +65,14 @@ complete_2x2 <- function(TP = NA, FP = NA, FN = NA, TN = NA, N = NA,
   if (is.na(N)) lp <- lp + (if (is.function(N_prior)) N_prior(T$N) else
                             if (N_prior == "loguniform") -log(T$N) else 0)
 
-  ## reported rates: rounding-consistent tables get full weight, others are penalised smoothly 
-  ## if some tables reproduce every reported rate after rounding, keep only those (hard constraint); if none do, fall back to a soft penalty, sd 0.005.
+  ##reported rates: rounding-consistent tables get full weight, others are penalised smoothly 
+  ## if some tables reproduce every reported rate after rounding, keep only those and if none do, fall back to a soft penalty, sd 0.005.
   consistent <- rep(TRUE, nrow(T)); gaps <- list()
   for (nm in names(reported)) {
     r <- reported[[nm]]; d <- if (length(r) > 1) r[2] else digits; r <- r[1]
     h <- 0.5 * 10^(-d); x <- M[[nm]]
     if (is.null(x)) stop("Unknown measure: ", nm, ". Use Se, Sp, PPV, NPV, Acc, Prev, F1.")
-    gap <- pmax(0, abs(x - r) - h - 1e-9); gap[is.na(gap)] <- Inf  # rounding boundary counted as consistent
+    gap <- pmax(0, abs(x - r) - h - 1e-9); gap[is.na(gap)] <- Inf # rounding boundary counted as consistent
     consistent <- consistent & gap == 0; gaps[[nm]] <- gap
   }
   if (length(reported)) {
@@ -117,7 +117,7 @@ print.complete2x2 <- function(x, digits = 3, top = 5, ...) {
 }
 
 
-#for learning the prior from COMPLETE tables in the same field (Dirichlet-multinomial maximum likelihood)
+#for learning the prior from complete tables in the same field 
 fit_prior_from_tables <- function(tabs) {
   tabs <- as.data.frame(tabs)[, c("TP","FP","FN","TN")]; tabs$N <- rowSums(tabs)
   #alpha = s * pi, pi on the simplex 
