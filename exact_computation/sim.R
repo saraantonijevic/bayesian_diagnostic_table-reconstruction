@@ -2,15 +2,15 @@ source("core.R")
 set.seed(20260927)
 R <- 500
 scen <- expand.grid(prev = c(0.1, 0.3, 0.5), Se = c(0.7, 0.9), Sp = c(0.7, 0.9), N = c(100, 500, 1000))
-priors_p <- list(paper = c(a1 = 1, b1 = 0.1, a2 = 0.1, b2 = 1),     # as in manuscript joint model
-                 flat  = c(a1 = 1, b1 = 1,   a2 = 1,   b2 = 1))     # Beta(1,1) on Se and FPR
+priors_p <- list(paper = c(a1 = 1, b1 = 0.1, a2 = 0.1, b2 = 1), 
+                 flat  = c(a1 = 1, b1 = 1,   a2 = 1,   b2 = 1))# Beta(1,1) on Se and FPR
 qty <- c("n1","n2","FN","TN","Se","Sp","NPV","Acc")
 
 out <- list(); k <- 0
 for (N in unique(scen$N)) {
-  lp1 <- c(-Inf, rep(0, N - 1))                                    # Model 1: uniform on 1..N-1
-  lp2 <- m2_logprior(N, 1, 2 / N)                                  # Model 2: lambda ~ Gamma(1, rate 2/N), mean N/2
-  gr3 <- m3_grid(N, 0.1, 0.5, 0.1, 0.01)                           # Model 3: manuscript hyperparameters
+  lp1 <- c(-Inf, rep(0, N - 1))# Model 1: uniform on 1..N-1
+  lp2 <- m2_logprior(N, 1, 2 / N) # Model 2: lambda ~ Gamma(1, rate 2/N), mean N/2
+  gr3 <- m3_grid(N, 0.1, 0.5, 0.1, 0.01)# Model 3: manuscript hyperparameters
   cache3 <- new.env()
   for (s in which(scen$N == N)) {
     f_out <- sprintf("parts/scen_%02d.rds", s); if (file.exists(f_out)) next
