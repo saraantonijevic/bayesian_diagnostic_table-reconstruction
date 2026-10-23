@@ -1,5 +1,7 @@
-#Exact posterior for the single-row model (normalized truncation, r >= 1)
-#y|n,p ~ Bin(n,p); p ~ Beta(al,be); n|p*,r ~ NegBin(p*,r) truncated to y <= n (<= Nup)
+#exact posterior for the single-row model (normalized truncation, r >= 1)
+#y|n,p ~ Bin(n,p)
+#p ~ Beta(al,be)
+#n|p*,r ~ NegBin(p*,r) truncated to y <= n (<= Nup)
 #r|lam ~ Pois(lam), r >= 1
 #lam ~ Gamma(a, b)
 #p* ~ Beta(as, bs)
