@@ -1,4 +1,4 @@
-#Exact (non-MCMC) posterior for n1 in the known-N models (Models 1-3)
+#exact (non-MCMC) posterior for n1 in the known-N models (Models 1-3)
 #p1, p2 are integrated out analytically -> beta-binomial marginal likelihoods. Hyperparameters of the n1 prior (lambda; p3, r) are integrated numerically on
 # equal-probability quantile grids of their priors.
 
