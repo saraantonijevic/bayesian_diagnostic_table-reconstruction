@@ -21,6 +21,7 @@ before running, e.g. `setwd("path/to/exact_computation")`.
 | `prior_rule.R`, `prior_rule_joint.R` | Priors chosen by rule and prior sensitivity analysis (main paper; Supplement S5) |
 | `run_bugs_vs_exact.R`, `incomplete2x2_model.txt` | WinBUGS implementation of the reported-summary model (Supplement S4) |
 | `incomplete2x2.R`, `demo.R` | General tool for completing any incomplete 2×2 table from its counts and reported summaries |
+| `revision_analyses.R` (after `sim.R`) | Revision analyses: sensitivity to the prior concentration m, crossed accuracy x denominator priors, sensitivity to the tolerance tau, per-model coverage, and the reporting-discrepancy experiment |
 
 ## Running times
 
