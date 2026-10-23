@@ -1,6 +1,6 @@
 source("core.R")
 source("incomplete2x2.R")
-#posterior over n1 under Models 1-3 (manuscript priors) times rounding indicator for reported rates
+#posterior over n1 under Models 1-3 times rounding indicator for reported rates
 post_with_reported <- function(TP, FP, N, logprior, h, rep) {
   po <- posterior_n1(TP, FP, N, logprior, h[1], h[2], h[3], h[4])
   n1 <- po$n1; n2 <- N - n1; TN <- n2 - FP
