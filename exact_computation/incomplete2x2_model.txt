@@ -1,8 +1,6 @@
-#  Incomplete 2x2 table, known N (WinBUGS / OpenBUGS / JAGS)
-# cell probabilities  pi ~ Dirichlet(alpha)        (default alpha = 1,1,1,1)
-# table(TP,FP,FN,TN) ~ Multinomial(N, pi)
-#  The multinomial is written as a chain of binomials (stick-breaking) so that
-#  TP and FP can be observed while FN is a latent node and TN = N - TP - FP - FN.
+#Incomplete 2x2 table, known N (WinBUGS)
+# cell probabilities  pi ~ Dirichlet(alpha)  
+#table(TP,FP,FN,TN) ~ Multinomial(N, pi)
 
 model {
   #Dirichlet(alpha) via stick-breaking
@@ -10,7 +8,7 @@ model {
   q2 ~ dbeta(alpha[2], a34)
   q3 ~ dbeta(alpha[3], alpha[4])
   a234 <- alpha[2] + alpha[3] + alpha[4]
-  a34  <- alpha[3] + alpha[4]
+  a34 <- alpha[3] + alpha[4]
 
   #multinomial as a binomial chain
   TP ~ dbin(q1, N)
@@ -26,7 +24,7 @@ model {
   Acc<- (TP + TN) / N
   Prev <- (TP + FN) / N
 
-  #reported rates (use* = 1 if reported, 0 if not; h* = rounding half-width)
+  #reported rates
   gapSe <- max(0, abs(Se - rSe) - hSe  - 1.0E-9)
   gapSp <- max(0, abs(Sp - rSp) - hSp   - 1.0E-9)
   gapAcc<- max(0, abs(Acc- rAcc)  - hAcc - 1.0E-9)
