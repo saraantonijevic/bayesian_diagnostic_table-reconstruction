@@ -70,12 +70,12 @@ writeLines(
 )
 
 dat = list( #refresh BUGS data + inits
-  TP   = as.integer(TP),
-  TN   = as.integer(TN),
-  a1   = a1, b1 = b1,
-  a2   = a2, b2 = b2,
-  Nmax = as.integer(Nmax),
-  omega = omega
+  TP = as.integer(TP),
+TN= as.integer(TN),
+a1 = a1, b1 = b1,
+a2 = a2, b2 = b2,
+Nmax = as.integer(Nmax),
+omega = omega
 )
 
 
@@ -84,11 +84,10 @@ initFunction = function() {  #function to have initial values for the MCMC
   n1_min = TP  #smallest n1 is TP
   n1_max = N0 - TN #largest n1 ensures n2 = N0 - n1 >= TN
   n10 = max(n1_min, min(n1_max, floor((n1_min + n1_max)/2)))
-  list(
-    p1 = rbeta(1, a1, b1), #initializes sensitivity
-    p2 = rbeta(1, a2, b2), #initializes specificity
-    N  = as.integer(N0),
-    n1 = as.integer(n10)
+  list( p1 = rbeta(1, a1, b1), #initializes sensitivity
+p2 = rbeta(1, a2, b2), #initializes specificity
+   N  = as.integer(N0),
+  n1 = as.integer(n10)
   )
 }
 
@@ -111,16 +110,7 @@ fit = bugs(
 )
 
 #summary 
-qs = function(z) c(mean = mean(z), sd = sd(z),
-                    `2.5%` = unname(quantile(z, .025)),
-                    `50%`  = median(z),
-                    `97.5%`= unname(quantile(z, .975)))
+qs = function(z) c(mean = mean(z), sd = sd(z), `2.5%` = unname(quantile(z, .025)), `50%`  = median(z),`97.5%`= unname(quantile(z, .975)))
 post = fit$sims.list
-tab = rbind(
-  n1 = qs(post$n1),
-  n2 = qs(post$n2),
-  FN = qs(post$FN),
-  FP = qs(post$FP),
-  N  = qs(post$N)
-)
+tab = rbind(n1 = qs(post$n1),n2 = qs(post$n2),FN = qs(post$FN),FP = qs(post$FP),N  = qs(post$N))
 print(round(as.data.frame(tab), 3))
